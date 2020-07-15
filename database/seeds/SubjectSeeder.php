@@ -1,5 +1,6 @@
 <?php
 
+use App\Subject;
 use Illuminate\Database\Seeder;
 
 class SubjectSeeder extends Seeder
@@ -11,6 +12,12 @@ class SubjectSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Subject::truncate();
+        $data = [
+            ['id' => '1', 'subjects_name' => 'Math'],
+            ['id' => '2', 'subjects_name' => 'Science'],
+            ['id' => '3', 'subjects_name' => 'English'],
+        ];
+        Subject::insert($data);
     }
 }

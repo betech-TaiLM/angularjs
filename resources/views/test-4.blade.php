@@ -116,7 +116,7 @@ app.controller("StudentController", function ($scope, $http) {
     var id = url[url.length - 1];
     $scope.getStudent = function () {
         $http({
-            url: '/demo/get-student',
+            url: '/angularjs/get-student',
             method: 'POST',
             data: JSON.stringify({ id: id })
         }).then(function successCallBack(response) {
@@ -125,7 +125,7 @@ app.controller("StudentController", function ($scope, $http) {
     }
     $scope.getClass = function () {
         $http({
-            url: '/demo/get-class',
+            url: '/angularjs/get-class',
             method: 'GET',
         }).then(function successCallBack(response) {
             $scope.class = response.data;
@@ -133,7 +133,7 @@ app.controller("StudentController", function ($scope, $http) {
     }
     $scope.updateStudent = function () {
         $http({
-            url: '/demo/update-student',
+            url: '/angularjs/update-student',
             method: 'POST',
             data: JSON.stringify({ student : $scope.student })
         }).then(function successCallBack(response) {
@@ -188,7 +188,7 @@ var id = url[url.length - 1];
 var token = $("input[name='_token']").val();
     $(document).ready(function(){
         $.ajax({
-            url: "/demo/get-class",
+            url: "/angularjs/get-class",
             method: 'GET',
             dataType:'json',
             data: {
@@ -206,7 +206,7 @@ var token = $("input[name='_token']").val();
     });
     $(document).ajaxStop(function () {
         $.ajax({
-            url: "/demo/get-student",
+            url: "/angularjs/get-student",
             method: 'POST',
             dataType:'json',
             data: {
@@ -223,7 +223,7 @@ var token = $("input[name='_token']").val();
     });
     $('#updateStudent').click(function(){
         $.ajax({
-        url: "/demo/update-student-jquery",
+        url: "/angularjs/update-student-jquery",
         method: 'POST',
         data: {
             id: id,
@@ -318,7 +318,7 @@ public function updateStudentJquery(Request $request)
     var token = $("input[name='_token']").val();
         $(document).ready(function(){
             $.ajax({
-                url: "/demo/get-class",
+                url: "/angularjs/get-class",
                 method: 'GET',
                 dataType:'json',
                 data: {
@@ -336,7 +336,7 @@ public function updateStudentJquery(Request $request)
         });
         $(document).ajaxStop(function () {
             $.ajax({
-                url: "/demo/get-student",
+                url: "/angularjs/get-student",
                 method: 'POST',
                 dataType:'json',
                 data: {
@@ -353,7 +353,7 @@ public function updateStudentJquery(Request $request)
         });
         $('#updateStudent').click(function(){
             $.ajax({
-            url: "/demo/update-student-jquery",
+            url: "/angularjs/update-student-jquery",
             method: 'POST',
             data: {
                 id: id,

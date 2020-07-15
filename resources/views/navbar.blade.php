@@ -14,15 +14,15 @@
             </div>
         </form>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href=""></a>
+            {{-- <li class="nav-item">
+                <a href="{{ route('test1') }}">Load Ajax</a>
             </li>
             <li class="nav-item">
-                English
+                <a href="{{ route('test2') }}">Filter, OrderBy</a>
             </li>
             <li class="nav-item">
-                English
-            </li>
+                <a href="{{ route('test3') }}">ng-if</a>
+            </li> --}}
         </ul>
     </div>
 </nav>

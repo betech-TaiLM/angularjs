@@ -4,7 +4,7 @@ $url = 'public/themes/';
 @extends('master')
 <style>
     .ace_editor {
-        height: 400px;
+        height: 500px;
     }
 </style>
 @section('content')
@@ -72,7 +72,7 @@ $url = 'public/themes/';
                             <thead>
                                 <tr>
                                     <th colspan="1">Filter All:</th>
-                                    <th colspan="5"><input class="form-control" type="text" id="filterAll"></th>
+                                    <th colspan="5"><input class="form-control" type="text" id="filterTable"></th>
                                 </tr>
                                 <tr>
                                     <th>Filter Column:</th>
@@ -165,7 +165,7 @@ $url = 'public/themes/';
 app.controller("TestController", function ($scope, $http) {
     $scope.getScoreStudent = function () {
         $http({
-            url: '/demo/get-score-student',
+            url: '/angularjs/get-score-student',
             method: 'GET',
         }).then(function successCallBack(response) {
             $scope.datas = response.data;
@@ -187,8 +187,33 @@ app.controller("TestController", function ($scope, $http) {
 <table class="table" id="TestTable">
     <thead>
         <tr>
-            <td>Filter:</td>
-            <td><input type="text" id="filtering"></td>
+            <th colspan="1">Filter All:</th>
+            <th colspan="5"><input class="form-control" type="text" id="filterTable"></th>
+        </tr>
+        <tr>
+            <th>Filter Column:</th>
+            <th><input class="form-control" type="text" id="filterName"></th>
+            <th>
+                <select class="form-control" id="filterClass">
+                    <option value="">All</option>
+                    <option value="12A">12A</option>
+                    <option value="12B">12B</option>
+                    <option value="12C">12C</option>
+                    <option value="12D">12D</option>
+                    <option value="12E">12E</option>
+                </select>
+            </th>
+            <th><input class="form-control" type="text" id="filterMath"></th>
+            <th><input class="form-control" type="text" id="filterScience"></th>
+            <th><input class="form-control" type="text" id="filterEnglish"></th>
+        </tr>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Math</th>
+            <th>Science</th>
+            <th>English</th>
         </tr>
     </thead>
     <tbody>
@@ -201,7 +226,7 @@ app.controller("TestController", function ($scope, $http) {
                             <textarea id="ace_javaScript_jquery" class="ace-editor w-100">
 $(document).ready(function(){
     $.ajax({
-    url: "/demo/get-score-student",
+    url: "/angularjs/get-score-student",
     method: 'GET',
     dataType:'json',
     success: function (response) {
@@ -264,12 +289,9 @@ public function getScoreStudent()
     $data = array();
     $students = Student::all();
     foreach ($students as $student) {
-        $data[] = [
-            'id' => $student->id,
-            'name' => $student->name,
-            'class' => $student->class->class_name,
-            'score' => ViewScore::getScoreByID($student->id)
-        ];
+        $score = ViewScore::getScoreByID($student->id);
+        $merge = $score->merge($student);
+        $data[] = array_merge(['class' => $student->class->class_name], $merge->toArray());
     }
     return json_encode($data);
 }
@@ -292,12 +314,9 @@ public function getScoreStudent()
     $data = array();
     $students = Student::all();
     foreach ($students as $student) {
-        $data[] = [
-            'id' => $student->id,
-            'name' => $student->name,
-            'class' => $student->class->class_name,
-            'score' => ViewScore::getScoreByID($student->id)
-        ];
+        $score = ViewScore::getScoreByID($student->id);
+        $merge = $score->merge($student);
+        $data[] = array_merge(['class' => $student->class->class_name], $merge->toArray());
     }
     return json_encode($data);
 }
@@ -317,7 +336,7 @@ public function getScoreStudent()
     <script>
         $(document).ready(function(){
             $.ajax({
-            url: "/demo/get-score-student",
+            url: "/angularjs/get-score-student",
             method: 'GET',
             dataType:'json',
             success: function (response) {
@@ -338,7 +357,7 @@ public function getScoreStudent()
             }
             });
 
-            $("#filterAll").keyup(function(){
+            $("#filterTable").keyup(function(){
             filter = new RegExp($(this).val(),'i');
             $("#TestTable tbody tr").filter(function(){
                 $(this).each(function(){

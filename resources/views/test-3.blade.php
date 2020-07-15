@@ -4,7 +4,7 @@ $url = 'public/themes/';
 @extends('master')
 <style>
     .ace_editor {
-        height: 300px;
+        height: 500px;
     }
 </style>
 
@@ -30,14 +30,14 @@ $url = 'public/themes/';
                             <tbody>
                                 <tr ng-repeat="data in datas">
                                     <th>@{{ $index+1 }}</th>
-                                    <td><a href="/demo/test-4/@{{ data.id }}">@{{ data.name }}</td>
+                                    <td><a href="/angularjs/test-4/@{{ data.id }}">@{{ data.name }}</a></td>
                                     <td>@{{ data.class }}</td>
-                                    <td ng-if="data.scores[0].score>7" style="color: red">@{{ data.scores[0].score }}</td>
-                                    <td ng-if="data.scores[0].score<=7">@{{ data.scores[0].score }}</td>
-                                    <td ng-if="isGoodScore(data.scores[1].score)" style="color: red">@{{ data.scores[1].score }}</td>
-                                    <td ng-if="!isGoodScore(data.scores[1].score)">@{{ data.scores[1].score }}</td>
-                                    <td ng-if="isGoodScore(data.scores[2].score)" style="color: red">@{{ data.scores[2].score }}</td>
-                                    <td ng-if="!isGoodScore(data.scores[2].score)">@{{ data.scores[2].score }}</td>
+                                    <td ng-if="data.Math>7" style="color: red">@{{ data.Math }}</td>
+                                    <td ng-if="data.Math<=7">@{{ data.Math }}</td>
+                                    <td ng-if="isGoodScore(data.Science)" style="color: red">@{{ data.Science }}</td>
+                                    <td ng-if="!isGoodScore(data.Science)">@{{ data.Science }}</td>
+                                    <td ng-if="isGoodScore(data.English)" style="color: red">@{{ data.English }}</td>
+                                    <td ng-if="!isGoodScore(data.English)">@{{ data.English }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -76,17 +76,27 @@ $url = 'public/themes/';
                             <h5 class="card-subtitle">HTML</h5>
                             <textarea id="ace_html" class="ace-editor">
 <table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Math</th>
+            <th>Science</th>
+            <th>English</th>
+        </tr>
+    </thead>
     <tbody>
         <tr ng-repeat="data in datas">
             <th> $index+1 </th>
-            <td> data.name </td>
+            <td><a href="/angularjs/test-4/ data.id "> data.name </a></td>
             <td> data.class </td>
-            <td ng-if="data.scores[0].score>7" style="color: red"> data.scores[0].score </td>
-            <td ng-if="data.scores[0].score<=7"> data.score[0].score </td>
-            <td ng-if="isGoodScore(data.scores[1].score)" style="color: red"> data.scores[1].score </td>
-            <td ng-if="!isGoodScore(data.scores[1].score)"> data.score[1].score </td>
-            <td ng-if="isGoodScore(data.scores[2].score)" style="color: red"> data.scores[2].score </td>
-            <td ng-if="!isGoodScore(data.scores[2].score)"> data.scores[2].score </td>
+            <td ng-if="data.Math>7" style="color: red"> data.Math </td>
+            <td ng-if="data.Math<=7"> data.Math </td>
+            <td ng-if="isGoodScore(data.Science)" style="color: red"> data.Science </td>
+            <td ng-if="!isGoodScore(data.Science)"> data.Science </td>
+            <td ng-if="isGoodScore(data.English)" style="color: red"> data.English </td>
+            <td ng-if="!isGoodScore(data.English)"> data.English </td>
         </tr>
     </tbody>
 </table></textarea>
@@ -97,7 +107,7 @@ $url = 'public/themes/';
                             <textarea id="ace_javaScript" class="ace-editor w-100">
 $scope.getScoreStudent = function () {
     $http({
-        url: '/demo/get-score-student',
+        url: '/angularjs/get-score-student',
         method: 'GET',
     }).then(function successCallBack(response) {
         $scope.datas = response.data;
@@ -120,6 +130,16 @@ $scope.isGoodScore = function (score) {
                             <h5 class="card-subtitle">HTML</h5>
                             <textarea id="ace_html_jquery" class="ace-editor w-100">
 <table class="table" id="TestTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Math</th>
+            <th>Science</th>
+            <th>English</th>
+        </tr>
+    </thead>
     <tbody>
     </tbody>
 </table></textarea>
@@ -130,7 +150,7 @@ $scope.isGoodScore = function (score) {
                             <textarea id="ace_javaScript_jquery" class="ace-editor w-100">
 $(document).ready(function(){
     $.ajax({
-    url: "/demo/get-score-student",
+    url: "/angularjs/get-score-student",
     method: 'GET',
     dataType:'json',
     success: function (response) {
@@ -142,12 +162,12 @@ $(document).ready(function(){
                 +'<td>' + index + '</td>'
                 +'<td>' + value.name + '</td>'
                 +'<td>' + value.class + '</td>'
-                +(value.scores[0].score > 7 ? '<td style="color: red">' : '<td>')
-                    + value.scores[0].score + '</td>'
-                +(value.scores[1].score > 7 ? '<td style="color: red">' : '<td>')
-                    + value.scores[1].score + '</td>'
-                +(value.scores[2].score > 7 ? '<td style="color: red">' : '<td>')
-                    + value.scores[2].score + '</td>'
+                +(value.Math > 7 ? '<td style="color: red">' : '<td>')
+                + value.Math + '</td>'
+                +(value.Science > 7 ? '<td style="color: red">' : '<td>')
+                + value.Science + '</td>'
+                +(value.English > 7 ? '<td style="color: red">' : '<td>')
+                + value.English + '</td>'
             '</tr>';
     });
     $('#TestTable').append(table);
@@ -172,12 +192,9 @@ public function getScoreStudent()
     $data = array();
     $students = Student::all();
     foreach ($students as $student) {
-        $data[] = [
-            'id' => $student->id,
-            'name' => $student->name,
-            'class' => $student->class->class_name,
-            'scores' => ViewScore::getScoreByID($student->id)
-        ];
+        $score = ViewScore::getScoreByID($student->id);
+        $merge = $score->merge($student);
+        $data[] = array_merge(['class' => $student->class->class_name], $merge->toArray());
     }
     return json_encode($data);
 }
@@ -200,12 +217,9 @@ public function getScoreStudent()
     $data = array();
     $students = Student::all();
     foreach ($students as $student) {
-        $data[] = [
-            'id' => $student->id,
-            'name' => $student->name,
-            'class' => $student->class->class_name,
-            'scores' => ViewScore::getScoreByID($student->id)
-        ];
+        $score = ViewScore::getScoreByID($student->id);
+        $merge = $score->merge($student);
+        $data[] = array_merge(['class' => $student->class->class_name], $merge->toArray());
     }
     return json_encode($data);
 }
@@ -225,7 +239,7 @@ public function getScoreStudent()
     <script>
         $(document).ready(function(){
             $.ajax({
-            url: "/demo/get-score-student",
+            url: "/angularjs/get-score-student",
             method: 'GET',
             dataType:'json',
             success: function (response) {
@@ -237,12 +251,12 @@ public function getScoreStudent()
                         +'<td>' + index + '</td>'
                         +'<td>' + value.name + '</td>'
                         +'<td>' + value.class + '</td>'
-                        +(value.scores[0].score > 7 ? '<td style="color: red">' : '<td>')
-                            + value.scores[0].score + '</td>'
-                        +(value.scores[1].score > 7 ? '<td style="color: red">' : '<td>')
-                            + value.scores[1].score + '</td>'
-                        +(value.scores[2].score > 7 ? '<td style="color: red">' : '<td>')
-                            + value.scores[2].score + '</td>'
+                        +(value.Math > 7 ? '<td style="color: red">' : '<td>')
+                            + value.Math + '</td>'
+                        +(value.Science > 7 ? '<td style="color: red">' : '<td>')
+                            + value.Science + '</td>'
+                        +(value.English > 7 ? '<td style="color: red">' : '<td>')
+                            + value.English + '</td>'
                     '</tr>';
             });
             $('#TestTable').append(table);

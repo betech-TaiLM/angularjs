@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
       <a href="#" class="sidebar-brand">
-        Demo<span>ANGULARJS</span>
+        AJS<span>DEMO</span>
       </a>
       <div class="sidebar-toggler not-active">
         <span></span>
@@ -32,4 +32,9 @@
           </li>
       </ul>
     </div>
+    <div class="sidebar-toggler not-active" wfd-id="228">
+        <span wfd-id="231"></span>
+        <span wfd-id="230"></span>
+        <span wfd-id="229"></span>
+      </div>
   </nav>

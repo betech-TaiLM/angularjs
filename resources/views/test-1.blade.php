@@ -4,7 +4,7 @@ $url = 'public/themes/';
 @extends('master')
 <style>
     .ace_editor {
-        height: 300px;
+        height: 500px;
     }
 </style>
 @section('content')
@@ -31,9 +31,9 @@ $url = 'public/themes/';
                                     <th>@{{ $index+1 }}</th>
                                     <td>@{{ data.name }}</td>
                                     <td>@{{ data.class }}</td>
-                                    <td>@{{ data.scores[0].score }}</td>
-                                    <td>@{{ data.scores[1].score }}</td>
-                                    <td>@{{ data.scores[2].score }}</td>
+                                    <td>@{{ data.Math }}</td>
+                                    <td>@{{ data.Science }}</td>
+                                    <td>@{{ data.English }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -72,14 +72,24 @@ $url = 'public/themes/';
                             <h5 class="card-subtitle">HTML</h5>
                             <textarea id="ace_html" class="ace-editor">
 <table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Math</th>
+            <th>Science</th>
+            <th>English</th>
+        </tr>
+    </thead>
     <tbody>
         <tr ng-repeat="data in datas">
             <th> $index+1 </th>
             <td> data.name </td>
             <td> data.class </td>
-            <td> data.scores[0].score </td>
-            <td> data.scores[1].score </td>
-            <td> data.scores[2].score </td>
+            <td> data.Math </td>
+            <td> data.Science </td>
+            <td> data.English </td>
         </tr>
     </tbody>
 </table></textarea>
@@ -91,7 +101,7 @@ $url = 'public/themes/';
 app.controller("TestController", function ($scope, $http) {
     $scope.getScoreStudent = function () {
         $http({
-            url: '/demo/get-score-student',
+            url: '/angularjs/get-score-student',
             method: 'GET',
         }).then(function successCallBack(response) {
             $scope.datas = response.data;
@@ -111,6 +121,16 @@ app.controller("TestController", function ($scope, $http) {
                             <h5 class="card-subtitle">HTML</h5>
                             <textarea id="ace_html_jquery" class="ace-editor w-100">
 <table class="table" id="TestTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Math</th>
+            <th>Science</th>
+            <th>English</th>
+        </tr>
+    </thead>
     <tbody>
     </tbody>
 </table></textarea>
@@ -120,7 +140,7 @@ app.controller("TestController", function ($scope, $http) {
                             <textarea id="ace_javaScript_jquery" class="ace-editor w-100">
 $(document).ready(function(){
     $.ajax({
-    url: "/demo/get-score-student",
+    url: "/angularjs/get-score-student",
     method: 'GET',
     dataType:'json',
     success: function (response) {
@@ -132,9 +152,9 @@ $(document).ready(function(){
                 +'<td>' + index + '</td>'
                 +'<td>' + value.name + '</td>'
                 +'<td>' + value.class + '</td>'
-                +'<td>' + value.scores[0].score + '</td>'
-                +'<td>' + value.scores[1].score + '</td>'
-                +'<td>' + value.scores[2].score + '</td>'
+                +'<td>' + value.Math + '</td>'
+                +'<td>' + value.Science + '</td>'
+                +'<td>' + value.English + '</td>'
             '</tr>';
         });
         $('#TestTable').append(table);
@@ -160,12 +180,9 @@ public function getScoreStudent()
     $data = array();
     $students = Student::all();
     foreach ($students as $student) {
-        $data[] = [
-            'id' => $student->id,
-            'name' => $student->name,
-            'class' => $student->class->class_name,
-            'scores' => ViewScore::getScoreByID($student->id)
-        ];
+        $score = ViewScore::getScoreByID($student->id);
+        $merge = $score->merge($student);
+        $data[] = array_merge(['class' => $student->class->class_name], $merge->toArray());
     }
     return json_encode($data);
 }
@@ -188,12 +205,9 @@ public function getScoreStudent()
     $data = array();
     $students = Student::all();
     foreach ($students as $student) {
-        $data[] = [
-            'id' => $student->id,
-            'name' => $student->name,
-            'class' => $student->class->class_name,
-            'scores' => ViewScore::getScoreByID($student->id)
-        ];
+        $score = ViewScore::getScoreByID($student->id);
+        $merge = $score->merge($student);
+        $data[] = array_merge(['class' => $student->class->class_name], $merge->toArray());
     }
     return json_encode($data);
 }
@@ -213,7 +227,7 @@ public function getScoreStudent()
     <script>
         $(document).ready(function(){
             $.ajax({
-            url: "/demo/get-score-student",
+            url: "/angularjs/get-score-student",
             method: 'GET',
             dataType:'json',
             success: function (response) {
@@ -225,9 +239,9 @@ public function getScoreStudent()
                         +'<td>' + index + '</td>'
                         +'<td>' + value.name + '</td>'
                         +'<td>' + value.class + '</td>'
-                        +'<td>' + value.scores[0].score + '</td>'
-                        +'<td>' + value.scores[1].score + '</td>'
-                        +'<td>' + value.scores[2].score + '</td>'
+                        +'<td>' + value.Math + '</td>'
+                        +'<td>' + value.Science + '</td>'
+                        +'<td>' + value.English + '</td>'
                     '</tr>';
                 });
                 $('#TestTable').append(table);
