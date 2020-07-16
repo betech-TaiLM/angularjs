@@ -31,6 +31,7 @@ $url = 'public/themes/';
 			</div>
 		</div>
     </div>
+    <script src="{{ url($url . 'angularjs/Controller/BaseController.js')}}"></script>
     <script src="{{ url($url . 'vendors/core/core.js')}}"></script>
     <script src="{{ url($url . 'vendors/feather-icons/feather.min.js')}}"></script>
     <script src="{{ url($url . 'js/template.js')}}"></script>

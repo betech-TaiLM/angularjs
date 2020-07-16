@@ -8,9 +8,9 @@ $url = 'public/themes/';
     }
 </style>
 @section('content')
-<div class="col-lg-12" ng-controller='TestController'>
-    <div class="row" ng-init='getScoreStudent()'>
-        <div class="col-md-6 grid-margin stretch-card">
+<div class="col-lg-12" ng-controller='BaseController'>
+    <div class="row" ng-controller='TestController'>
+        <div class="col-md-6 grid-margin stretch-card" ng-init='getScoreStudent()'>
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">ANGULARJS</h6>
@@ -45,17 +45,18 @@ $url = 'public/themes/';
                                     <th>Math</th>
                                     <th>Science</th>
                                     <th>English</th>
+                                    <th>GPA</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="data in datas|filter: filterColumn| filter: filterTable|orderBy : 'class'"
-                                    ng-repeat="score in data.scores">
+                                <tr ng-repeat="data in scoreStudents|filter: filterColumn| filter: filterTable|orderBy : 'class'">
                                     <th>@{{ $index+1 }}</th>
-                                    <td>@{{ data.name }}</td>
-                                    <td>@{{ data.class }}</td>
-                                    <td>@{{ data.Math }}</td>
-                                    <td>@{{ data.Science }}</td>
-                                    <td>@{{ data.English }}</td>
+                                    <td>@{{ data.name | uppercase }}</td>
+                                    <td>@{{ data.class| lowercase}}</td>
+                                    <td>@{{ data.Math | number:2 }}</td>
+                                    <td>@{{ data.Science | number:2 }}</td>
+                                    <td>@{{ data.English | number:2 }}</td>
+                                    <td>@{{ (data.Math+data.Science+data.English)/3 | number:2 }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -147,7 +148,7 @@ $url = 'public/themes/';
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="data in datas|filter: filterColumn| filter: filterTable|orderBy : 'class'">
+        <tr ng-repeat="data in scoreStudents|filter: filterColumn| filter: filterTable|orderBy : 'class'">
             <th> $index+1 </th>
             <td> data.name </td>
             <td> data.class </td>
@@ -168,7 +169,7 @@ app.controller("TestController", function ($scope, $http) {
             url: '/angularjs/get-score-student',
             method: 'GET',
         }).then(function successCallBack(response) {
-            $scope.datas = response.data;
+            $scope.scoreStudents = response.data;
         });
     }
 });</textarea>

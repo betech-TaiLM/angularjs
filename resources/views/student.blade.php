@@ -8,7 +8,6 @@ $url = 'public/themes/';
 }
 </style>
 
-
 @section('content')
 <div class="col-lg-12" ng-controller='StudentController'>
     <div class="row" ng-init='getStudent()'>
@@ -334,7 +333,7 @@ public function updateStudentJquery(Request $request)
                 }
             });
         });
-        $(document).ajaxStop(function () {
+        $(document).ready(function () {
             $.ajax({
                 url: "/angularjs/get-student",
                 method: 'POST',
@@ -351,6 +350,7 @@ public function updateStudentJquery(Request $request)
                 }
             });
         });
+
         $('#updateStudent').click(function(){
             $.ajax({
             url: "/angularjs/update-student-jquery",

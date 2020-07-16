@@ -7,10 +7,11 @@ $url = 'public/themes/';
         height: 500px;
     }
 </style>
+
 @section('content')
-<div class="col-lg-12" ng-controller='TestController'>
-    <div class="row" ng-init='getScoreStudent()'>
-        <div class="col-md-6 grid-margin stretch-card">
+<div class="col-lg-12" ng-controller='BaseController'>
+    <div class="row" ng-controller='TestController'>
+        <div class="col-md-6 grid-margin stretch-card" ng-init='getScoreStudent()'>
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">ANGULARJS</h6>
@@ -27,13 +28,16 @@ $url = 'public/themes/';
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="data in datas">
+                                <tr ng-repeat="data in scoreStudents">
                                     <th>@{{ $index+1 }}</th>
-                                    <td>@{{ data.name }}</td>
+                                    <td><a href="/angularjs/student/@{{ data.id }}">@{{ data.name }}</a></td>
                                     <td>@{{ data.class }}</td>
-                                    <td>@{{ data.Math }}</td>
-                                    <td>@{{ data.Science }}</td>
-                                    <td>@{{ data.English }}</td>
+                                    <td ng-if="data.Math>7" style="color: red">@{{ data.Math }}</td>
+                                    <td ng-if="data.Math<=7">@{{ data.Math }}</td>
+                                    <td ng-if="isGoodScore(data.Science)" style="color: red">@{{ data.Science }}</td>
+                                    <td ng-if="!isGoodScore(data.Science)">@{{ data.Science }}</td>
+                                    <td ng-if="isGoodScore(data.English)" style="color: red">@{{ data.English }}</td>
+                                    <td ng-if="!isGoodScore(data.English)">@{{ data.English }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -83,13 +87,16 @@ $url = 'public/themes/';
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="data in datas">
+        <tr ng-repeat="data in scoreStudents">
             <th> $index+1 </th>
-            <td> data.name </td>
+            <td><a href="/angularjs/student/ data.id "> data.name </a></td>
             <td> data.class </td>
-            <td> data.Math </td>
-            <td> data.Science </td>
-            <td> data.English </td>
+            <td ng-if="data.Math>7" style="color: red"> data.Math </td>
+            <td ng-if="data.Math<=7"> data.Math </td>
+            <td ng-if="isGoodScore(data.Science)" style="color: red"> data.Science </td>
+            <td ng-if="!isGoodScore(data.Science)"> data.Science </td>
+            <td ng-if="isGoodScore(data.English)" style="color: red"> data.English </td>
+            <td ng-if="!isGoodScore(data.English)"> data.English </td>
         </tr>
     </tbody>
 </table></textarea>
@@ -98,16 +105,18 @@ $url = 'public/themes/';
                         <div class="col-md-12">
                             <h5 class="card-subtitle">Javascript</h5>
                             <textarea id="ace_javaScript" class="ace-editor w-100">
-app.controller("TestController", function ($scope, $http) {
-    $scope.getScoreStudent = function () {
-        $http({
-            url: '/angularjs/get-score-student',
-            method: 'GET',
-        }).then(function successCallBack(response) {
-            $scope.datas = response.data;
-        });
-    }
-});</textarea>
+$scope.getScoreStudent = function () {
+    $http({
+        url: '/angularjs/get-score-student',
+        method: 'GET',
+    }).then(function successCallBack(response) {
+        $scope.scoreStudents = response.data;
+    });
+}
+
+$scope.isGoodScore = function (score) {
+    return (score > 7) ? true : false;
+}</textarea>
                         </div>
                     </div>
                 </div>
@@ -135,6 +144,7 @@ app.controller("TestController", function ($scope, $http) {
     </tbody>
 </table></textarea>
                         </div>
+
                         <div class="col-md-12">
                             <h5 class="card-subtitle">Javascript</h5>
                             <textarea id="ace_javaScript_jquery" class="ace-editor w-100">
@@ -144,20 +154,23 @@ $(document).ready(function(){
     method: 'GET',
     dataType:'json',
     success: function (response) {
-        var table = '';
-        $.each(response, function (key,value) {
+    var table = '';
+    $.each(response, function (key,value) {
             var index = key+1;
             table +=
             '<tr>'
                 +'<td>' + index + '</td>'
                 +'<td>' + value.name + '</td>'
                 +'<td>' + value.class + '</td>'
-                +'<td>' + value.Math + '</td>'
-                +'<td>' + value.Science + '</td>'
-                +'<td>' + value.English + '</td>'
+                +(value.Math > 7 ? '<td style="color: red">' : '<td>')
+                + value.Math + '</td>'
+                +(value.Science > 7 ? '<td style="color: red">' : '<td>')
+                + value.Science + '</td>'
+                +(value.English > 7 ? '<td style="color: red">' : '<td>')
+                + value.English + '</td>'
             '</tr>';
-        });
-        $('#TestTable').append(table);
+    });
+    $('#TestTable').append(table);
     }
     });
 });
@@ -167,7 +180,6 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -231,20 +243,23 @@ public function getScoreStudent()
             method: 'GET',
             dataType:'json',
             success: function (response) {
-                var table = '';
-                $.each(response, function (key,value) {
+            var table = '';
+            $.each(response, function (key,value) {
                     var index = key+1;
                     table +=
                     '<tr>'
                         +'<td>' + index + '</td>'
                         +'<td>' + value.name + '</td>'
                         +'<td>' + value.class + '</td>'
-                        +'<td>' + value.Math + '</td>'
-                        +'<td>' + value.Science + '</td>'
-                        +'<td>' + value.English + '</td>'
+                        +(value.Math > 7 ? '<td style="color: red">' : '<td>')
+                            + value.Math + '</td>'
+                        +(value.Science > 7 ? '<td style="color: red">' : '<td>')
+                            + value.Science + '</td>'
+                        +(value.English > 7 ? '<td style="color: red">' : '<td>')
+                            + value.English + '</td>'
                     '</tr>';
-                });
-                $('#TestTable').append(table);
+            });
+            $('#TestTable').append(table);
             }
             });
         });

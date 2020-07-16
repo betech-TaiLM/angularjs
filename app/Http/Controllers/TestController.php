@@ -47,44 +47,17 @@ class TestController extends Controller
         return "Update successful";
     }
 
-    public function test1()
+    public function directive()
     {
-        return view('test-1');
+        return view('demo-directive');
     }
-    public function test2()
+    public function filter()
     {
-        return view('test-2');
+        return view('demo-filter');
     }
-    public function test3()
+    public function student()
     {
-        return view('test-3');
+        return view('student');
     }
-    public function test4()
-    {
-        return view('test-4');
-    }
-    public function test5()
-    {
-        return view('test-5');
-    }
-    public function test6()
-    {
-        return view('test-6');
-    }
-    public function test7()
-    {
-        return view('test-7');
-    }
-    public function test8()
-    {
-        return view('test-8');
-    }
-    public function test9()
-    {
-        return view('test-9');
-    }
-    public function test10()
-    {
-        return view('test-10');
-    }
+
 }

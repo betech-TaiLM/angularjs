@@ -11,23 +11,16 @@
     </div>
     <div class="sidebar-body">
       <ul class="nav">
-        <li class="nav-item nav-category">Load Ajax</li>
         <li class="nav-item">
-          <a href="{{ route('test1') }}" class="nav-link">
+          <a href="{{ route('directive') }}" class="nav-link">
             <i class="link-icon" data-feather="box"></i>
-            <span class="link-title">Basic</span>
+            <span class="link-title">Directive</span>
           </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('test2') }}" class="nav-link">
+            <a href="{{ route('filter') }}" class="nav-link">
               <i class="link-icon" data-feather="box"></i>
-              <span class="link-title">Filter, OrderBy</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('test3') }}" class="nav-link">
-              <i class="link-icon" data-feather="box"></i>
-              <span class="link-title">ng-if</span>
+              <span class="link-title">Filter</span>
             </a>
           </li>
       </ul>
