@@ -67,7 +67,7 @@ $url = 'public/themes/';
                                         </select>
                                     </th>
                                     <th><input class="form-control" type="text" ng-model="filterColumn.birthday"></th>
-                                    <th><input class="form-control" type="text" ng-model="filterColumn.class_id"></th>
+                                    <th><input class="form-control" type="text" ng-model="filterColumn.class"></th>
                                 </tr>
                                 <tr>
                                     <th>#</th>
@@ -97,7 +97,7 @@ $url = 'public/themes/';
             </div>
         </div>
     </div>
-    @endsection
+@endsection
 
 @push('customScript')
     <script src="{{ url($url . '/angularjs/Controller/StudentController.js')}}"></script>
