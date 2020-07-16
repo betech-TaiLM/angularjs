@@ -8,7 +8,4 @@ app.controller("BaseController", function ($scope, $rootScope, $http) {
         });
     }
     $rootScope.testBase = "AngularJS";
-
-
-
 });

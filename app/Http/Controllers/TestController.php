@@ -17,15 +17,14 @@ class TestController extends Controller
         foreach ($students as $student) {
             $score = ViewScore::getScoreByID($student->id);
             $merge = $score->merge($student);
-            $data[] = array_merge(['class' => $student->class->class_name], $merge->toArray());
+            $data[] = array_merge($merge->toArray());
         }
         return json_encode($data);
     }
 
-    public function getStudent(Request $request)
+    public function getStudents()
     {
-        $id = $request->id;
-        $students = Student::find($id);
+        $students = Student::all();
         return json_encode($students);
     }
 
@@ -35,16 +34,22 @@ class TestController extends Controller
         return json_encode($class);
     }
 
+    public function addStudent(Request $request)
+    {
+        $student = $request->student;
+        Student::create($student);
+    }
+
     public function updateStudent(Request $request)
     {
         $student = $request->student;
         Student::whereId($student['id'])->update($student);
     }
 
-    public function updateStudentJquery(Request $request)
+    public function deleteStudent(Request $request)
     {
-        Student::whereId($request->id)->update($request->except('_token'));
-        return "Update successful";
+        $student = $request->student;
+        Student::whereId($student['id'])->delete($student);
     }
 
     public function directive()
@@ -55,9 +60,9 @@ class TestController extends Controller
     {
         return view('demo-filter');
     }
-    public function student()
+    public function students()
     {
-        return view('student');
+        return view('students');
     }
 
 }

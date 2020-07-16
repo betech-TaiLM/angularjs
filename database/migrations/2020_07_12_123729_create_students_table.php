@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('gender');
             $table->string('birthday');
-            $table->integer('class_id');
+            $table->string('class');
         });
     }
 

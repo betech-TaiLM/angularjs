@@ -23,6 +23,12 @@
               <span class="link-title">Filter</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('students') }}" class="nav-link">
+              <i class="link-icon" data-feather="box"></i>
+              <span class="link-title">List Student</span>
+            </a>
+          </li>
       </ul>
     </div>
     <div class="sidebar-toggler not-active" wfd-id="228">
